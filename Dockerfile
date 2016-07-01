@@ -17,17 +17,17 @@ RUN apk add --virtual build-dependencies build-base libxml2-dev libxslt-dev \
       &&  bundle config build.nokogiri --use-system-libraries \
       &&  bundle install --jobs=4
 
-RUN adduser -S backup
-USER backup
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod a+x /docker-entrypoint.sh
 
-RUN mkdir -p /home/backup/Backup
-WORKDIR /home/backup/Backup
+RUN mkdir -p /root/Backup
+WORKDIR /root/Backup
 
 COPY config.rb .
 COPY schedule.rb .
 
-ADD models/default.rb /home/backup/Backup/models/default.rb
+ADD models/default.rb /root/Backup/models/default.rb
 
-VOLUME ['/home/backup/Backup/models']
+VOLUME ['/root/Backup/models']
 
-CMD '/usr/local/bin/backup'
+CMD /docker-entrypoint.sh

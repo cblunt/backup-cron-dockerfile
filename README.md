@@ -36,8 +36,8 @@ To check your backup configuration, set your environment variables in a file `.e
         - SMTP_PASSWORD=sendgrid-password
 
       volumes:
-        - ./backup_models:/home/backup/Backup/models
-        - ./schedule.rb:/home/backup/Backup/schedule.rb # Optional. Default is to run backup `default` at 9pm every day.
+        - ./backup_models:/root/Backup/models
+        - ./schedule.rb:/root/Backup/schedule.rb # Optional. Default is to run backup `default` at 9pm every day.
 
       links:
         - db

@@ -5,7 +5,7 @@ ENV.each { |k, v| env(k, v) }
 
 set :job_template, nil
 
-job_type :backup, 'cd /home/backup/Backup && backup perform --trigger :task :output'
+job_type :backup, 'cd /root/Backup && backup perform --trigger :task :output'
 
 every 1.day, at: '9:00pm' do
   backup 'default'
