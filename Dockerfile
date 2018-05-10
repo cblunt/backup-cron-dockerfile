@@ -12,6 +12,9 @@ RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposito
 COPY Gemfile .
 COPY Gemfile.lock .
 
+# Install dependencies
+RUN apk add openssl-dev
+
 # Install gems
 RUN apk add --virtual build-dependencies build-base libxml2-dev libxslt-dev \
       &&  bundle config build.nokogiri --use-system-libraries \
