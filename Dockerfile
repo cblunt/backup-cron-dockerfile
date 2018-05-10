@@ -1,4 +1,4 @@
-FROM cblunt/alpine-linux-ruby:2.3.1
+FROM ruby:2.3-alpine
 
 # Set timezone
 RUN apk add --update tzdata && \
@@ -9,8 +9,11 @@ RUN apk add --update tzdata && \
 RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     apk --update add "postgresql@edge<9.6" "postgresql-contrib@edge<9.6" ruby-dev tar
 
-ADD Gemfile .
-ADD Gemfile.lock .
+COPY Gemfile .
+COPY Gemfile.lock .
+
+# Install dependencies
+RUN apk add openssl
 
 # Install gems
 RUN apk add --virtual build-dependencies build-base libxml2-dev libxslt-dev \
@@ -26,8 +29,8 @@ WORKDIR /root/Backup
 COPY config.rb .
 COPY schedule.rb .
 
-ADD models/default.rb /root/Backup/models/default.rb
+COPY models/default.rb /root/Backup/models/default.rb
 
-VOLUME ['/root/Backup/models']
+VOLUME ["/root/Backup/models"]
 
-CMD /docker-entrypoint.sh
+CMD ["/docker-entrypoint.sh"]
