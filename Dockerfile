@@ -13,7 +13,7 @@ COPY Gemfile .
 COPY Gemfile.lock .
 
 # Install dependencies
-RUN apk add openssl-dev
+RUN apk add openssl
 
 # Install gems
 RUN apk add --virtual build-dependencies build-base libxml2-dev libxslt-dev \
